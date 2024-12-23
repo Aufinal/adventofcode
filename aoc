@@ -7,6 +7,7 @@ then
 	day=$(date +%d)
 	year=$(date +%Y)
 elif [ $# -eq 2 ]
+then
 	day=$2
 	year=$(date +%Y)
 else
@@ -20,8 +21,8 @@ run () {
 		julia $1.jl $2
 	elif [ -f "$1.cpp" ]
 	then
-		make exec/$1
-		./exec/$1 $2
+		make $1
+		./exec/${1/\//-} $2
 	elif [ -f "$1.py" ]
 	then
 		python $1.py $2
@@ -36,8 +37,7 @@ then
 elif [ $cmd = "run" ]
 then
 	filename=${year}/${day}
-	if [ -f ]
-	julia ${year}/${day}.jl ${year}/inputs/${day}
+	run "${year}/${day}" "${year}/inputs/${day}"
 elif [ $cmd = "test" ]
 then
 	julia ${day}.jl inputs/test

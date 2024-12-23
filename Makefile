@@ -7,7 +7,8 @@ PROGS = $(patsubst %.cpp,exec/%,$(SRCS))
 
 all: $(PROGS)
 
-exec/%: %.cpp
-	$(CC) $(CFLAGS) -o exec/$@ $<
+
+%: %.cpp
+	$(CC) $(CFLAGS) -o exec/$(subst /,-,$@) $<
 clean: 
 	rm -f $(PROGS)
