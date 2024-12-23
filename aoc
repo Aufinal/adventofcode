@@ -1,30 +1,50 @@
 #!/bin/bash
 base_url="https://adventofcode.com"
-year="2024"
 
 cmd="$1"
 if [ $# -eq 1 ]
 then
 	day=$(date +%d)
-else
+	year=$(date +%Y)
+elif [ $# -eq 2 ]
 	day=$2
+	year=$(date +%Y)
+else
+	year=$2
+	day=$3
 fi
+
+run () {
+	if [ -f "$1.jl" ]
+	then
+		julia $1.jl $2
+	elif [ -f "$1.cpp" ]
+	then
+		make exec/$1
+		./exec/$1 $2
+	elif [ -f "$1.py" ]
+	then
+		python $1.py $2
+	fi
+}
 
 url="${base_url}/${year}/day/$((10#$day))"
 
 if [ $cmd = "download" ]
 then
-	curl --cookie $(<.cookie) "${url}/input" > inputs/${day};
+	curl --cookie $(<.cookie) "${url}/input" > ${year}/inputs/${day};
 elif [ $cmd = "run" ]
 then
-	julia ${day}.jl inputs/${day}
+	filename=${year}/${day}
+	if [ -f ]
+	julia ${year}/${day}.jl ${year}/inputs/${day}
 elif [ $cmd = "test" ]
 then
 	julia ${day}.jl inputs/test
 elif [ $cmd = "commit" ]
 then
-	git add ${day}.jl && git commit -m "Day ${day}"
+	git add ${day}.jl && git commit -m "AoC ${year} - Day ${day}"
 elif [ $cmd = "setup" ]
 then
-	cp template.jl ${day}.jl
+	cp template.jl ${year}/${day}.jl
 fi
