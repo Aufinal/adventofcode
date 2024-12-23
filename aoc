@@ -1,0 +1,30 @@
+#!/bin/bash
+base_url="https://adventofcode.com"
+year="2024"
+
+cmd="$1"
+if [ $# -eq 1 ]
+then
+	day=$(date +%d)
+else
+	day=$2
+fi
+
+url="${base_url}/${year}/day/$((10#$day))"
+
+if [ $cmd = "download" ]
+then
+	curl --cookie $(<.cookie) "${url}/input" > inputs/${day};
+elif [ $cmd = "run" ]
+then
+	julia ${day}.jl inputs/${day}
+elif [ $cmd = "test" ]
+then
+	julia ${day}.jl inputs/test
+elif [ $cmd = "commit" ]
+then
+	git add ${day}.jl && git commit -m "Day ${day}"
+elif [ $cmd = "setup" ]
+then
+	cp template.jl ${day}.jl
+fi
