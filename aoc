@@ -40,10 +40,10 @@ then
 	run "${year}/${day}" "${year}/inputs/${day}"
 elif [ $cmd = "test" ]
 then
-	julia ${day}.jl inputs/test
+	run "${year}/${day}" "${year}/inputs/test"
 elif [ $cmd = "commit" ]
 then
-	git add ${day}.jl && git commit -m "AoC ${year} - Day ${day}"
+	git add ${year}/${day}* && git commit -m "AoC ${year} - Day ${day}"
 elif [ $cmd = "setup" ]
 then
 	cp template.jl ${year}/${day}.jl
