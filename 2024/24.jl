@@ -57,7 +57,6 @@ function build_adder(rules, n_bits)
             theory = (sums_inp[j+1], "XOR", c_out)
             if isnothing(c_out)
                 # carries_inp[j] is wrong
-                println(j, " carries")
                 p = find_partial(rules, (c_mid, "OR"))
                 true_carry = other(c_mid, rules[p])
                 swap!(true_carry, carries_inp[j])
